@@ -161,3 +161,25 @@ show ip route ospf
 show ip nat translations
 show ip nat statistics
 show ip interface brief
+
+
+
+
+
+## Configuration Files
+
+Full device configurations are available in the `configs` directory.
+
+## What I Learned
+
+This project helped strengthen my understanding of how individual CCNA technologies work together in a larger enterprise design.
+
+Rather than configuring each technology in isolation, I had to understand how switching, routing, gateway redundancy, DHCP, NAT, and WAN connectivity affected the complete traffic path.
+
+The failure testing was particularly valuable because it demonstrated the difference between simply configuring redundancy and verifying that redundancy actually works.
+
+## Tools
+
+- Cisco Packet Tracer
+- Cisco IOS CLI
+- GitHub
