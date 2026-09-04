@@ -171,7 +171,7 @@ Full running configurations for the routers and switches are included in this re
 * `SW-BR1.TXT`
 * `SW-BR2.TXT`
 
-The completed Cisco Packet Tracer topology is also available as `multi-site-enterprise-network.pkt`.
+The completed Cisco Packet Tracer topology is also included as `multi-site-enterprise-network.pkt`.
 
 ## What I Learned
 
