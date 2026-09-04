@@ -1,5 +1,3 @@
-# multi-site-enterprise-network
-Enterprise Packet Tracer lab demonstrating VLANs, HSRP, OSPF, EtherChannel, DHCP, NAT, ACLs, and failure recovery across a multi-site network.
 # Multi-Site Enterprise Network — From Deployment to Failure Recovery
 
 ## Overview
@@ -14,45 +12,45 @@ The goal of the lab was not only to configure the network, but also to verify no
 
 The topology consists of:
 
-- Headquarters with two multilayer switches
-- Two branch offices
-- Edge router
-- ISP router
-- Public web server
-- Centralized DHCP services
-- Multiple VLANs
-- Redundant switching paths
+* Headquarters with two multilayer switches
+* Two branch offices
+* Edge router
+* ISP router
+* Public web server
+* Centralized DHCP services
+* Multiple VLANs
+* Redundant switching paths
 
-![Network Topology](screenshots/network-topology.png)
+![Network Topology](enterprise%20topology.png)
 
 ## Technologies Implemented
 
-- VLAN segmentation
-- 802.1Q trunking
-- Router-on-a-Stick
-- Layer 3 switching
-- HSRP
-- LACP EtherChannel
-- Rapid-PVST
-- OSPF
-- DHCP
-- DHCP relay
-- NAT/PAT
-- ACLs
-- PortFast
-- BPDU Guard
-- Port Security
-- Default route propagation
+* VLAN segmentation
+* 802.1Q trunking
+* Router-on-a-Stick
+* Layer 3 switching
+* HSRP
+* LACP EtherChannel
+* Rapid-PVST
+* OSPF
+* DHCP
+* DHCP relay
+* NAT/PAT
+* ACLs
+* PortFast
+* BPDU Guard
+* Port Security
+* Default route propagation
 
 ## VLAN Design
 
-| VLAN | Purpose |
-|---|---|
-| 10 | Users |
-| 20 | Servers |
-| 30 | Voice |
-| 99 | Management |
-| 999 | Native VLAN |
+| VLAN | Purpose     |
+| ---- | ----------- |
+| 10   | Users       |
+| 20   | Servers     |
+| 30   | Voice       |
+| 99   | Management  |
+| 999  | Native VLAN |
 
 ## Routing
 
@@ -60,9 +58,9 @@ OSPF provides dynamic routing between headquarters, the edge router, and both br
 
 The edge router also advertises a default route into OSPF, allowing internal networks to reach external destinations.
 
-![OSPF Neighbors](screenshots/ospf-neighbor-verification.png)
+![OSPF Neighbors](ospf-neighbor-verification.png.png)
 
-![OSPF Routing Table](screenshots/ospf-routing-table.png)
+![OSPF Routing Table](ospf-routing-table.png.png)
 
 ## Gateway Redundancy
 
@@ -72,7 +70,7 @@ HQ-SW1 is the preferred active gateway for VLANs 10 and 20.
 
 HQ-SW2 is the preferred active gateway for VLANs 30 and 99.
 
-![HSRP Verification](screenshots/hsrp-verification.png)
+![HSRP Verification](hsrp-verification.png.png)
 
 ## EtherChannel
 
@@ -80,7 +78,7 @@ HQ-SW1 and HQ-SW2 are connected using an LACP EtherChannel consisting of two Fas
 
 This provides additional bandwidth and redundancy between the switches.
 
-![EtherChannel Verification](screenshots/etherchannel-verification.png)
+![EtherChannel Verification](etherchannel-verification.png.png)
 
 ## Trunking
 
@@ -88,7 +86,7 @@ The EtherChannel operates as an 802.1Q trunk carrying VLANs 10, 20, 30, 99, and 
 
 VLAN 999 is used as the native VLAN.
 
-![Trunk Verification](screenshots/trunk-verification.png)
+![Trunk Verification](trunk-verification.png.png)
 
 ## DHCP
 
@@ -102,9 +100,9 @@ Internal private networks reach the simulated Internet through the edge router.
 
 NAT/PAT translates internal private addresses to the outside-facing address of the edge router.
 
-![Branch Connectivity](screenshots/branch-internet-connectivity.png)
+![Branch Connectivity](branch-internet-connectivity.png.png)
 
-![NAT Translation](screenshots/nat-translation-verification.png)
+![NAT Translation](nat-translation-verification.png.png)
 
 ## Failure Recovery Testing
 
@@ -116,7 +114,7 @@ HQ-SW2 automatically transitioned from Standby to Active and assumed responsibil
 
 Connectivity to the HSRP virtual IP remained available.
 
-![HSRP Failover](screenshots/hsrp-failover.png)
+![HSRP Failover](hsrp-failover.png.png)
 
 After HQ-SW1 was restored, its higher HSRP priority and preemption configuration allowed it to reclaim the Active role.
 
@@ -126,24 +124,22 @@ One physical member of the LACP EtherChannel was manually shut down.
 
 The port-channel remained operational using the remaining physical link.
 
-![EtherChannel Failure](screenshots/etherchannel-link-failure.png)
+![EtherChannel Link Failure](etherchannel-link-failure.png.png)
 
 This demonstrated that the logical EtherChannel could survive the loss of an individual member link.
 
 ## Troubleshooting Experience
 
-Several issues were encountered and resolved during the build.
+Several issues were encountered and resolved during the build, including:
 
-These included:
-
-- Native VLAN mismatch between trunk links
-- Branch clients receiving APIPA addresses
-- DHCP relay configuration
-- OSPF adjacency and route propagation
-- NAT initially showing no translations
-- Verifying traffic paths between internal and external networks
-- HSRP preemption configuration
-- EtherChannel redundancy validation
+* Native VLAN mismatch between trunk links
+* Branch clients receiving APIPA addresses
+* DHCP relay configuration
+* OSPF adjacency and route propagation
+* NAT initially showing no translations
+* Verifying traffic paths between internal and external networks
+* HSRP preemption configuration
+* EtherChannel redundancy validation
 
 Troubleshooting these issues helped reinforce the importance of verifying Layer 1 through Layer 3 connectivity systematically rather than assuming the problem exists at a specific layer.
 
@@ -151,7 +147,7 @@ Troubleshooting these issues helped reinforce the importance of verifying Layer 
 
 Some of the commands used to validate the network included:
 
-
+```text
 show etherchannel summary
 show interfaces trunk
 show spanning-tree
@@ -161,14 +157,21 @@ show ip route ospf
 show ip nat translations
 show ip nat statistics
 show ip interface brief
-
-
-
-
+```
 
 ## Configuration Files
 
-Full device configurations are available in the `configs` directory.
+Full running configurations for the routers and switches are included in this repository:
+
+* `HQ-SW1.TXT`
+* `HQ-SW2.TXT`
+* `RTR-EDGE.TXT`
+* `RTR-BR1.TXT`
+* `RTR-BR2.TXT`
+* `SW-BR1.TXT`
+* `SW-BR2.TXT`
+
+The completed Cisco Packet Tracer topology is also available as `multi-site-enterprise-network.pkt`.
 
 ## What I Learned
 
@@ -180,6 +183,6 @@ The failure testing was particularly valuable because it demonstrated the differ
 
 ## Tools
 
-- Cisco Packet Tracer
-- Cisco IOS CLI
-- GitHub
+* Cisco Packet Tracer
+* Cisco IOS CLI
+* GitHub
